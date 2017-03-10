@@ -1,4 +1,4 @@
-/*! lineupjs - v1.1.0 - 2017
+/*! lineupjs - v1.1.1 - 2017
 * https://github.com/Caleydo/lineupjs
 * Copyright (c) 2017 Caleydo Team; Licensed BSD-3-Clause*/
 
