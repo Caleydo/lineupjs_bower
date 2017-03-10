@@ -4,13 +4,13 @@
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("d3"), require(undefined));
+		module.exports = factory(require("d3"), require("react"));
 	else if(typeof define === 'function' && define.amd)
 		define(["d3", "react"], factory);
 	else if(typeof exports === 'object')
 		exports["LineUpJS"] = factory(require("d3"), require("react"));
 	else
-		root["LineUpJS"] = factory(root["d3"], root[undefined]);
+		root["LineUpJS"] = factory(root["d3"], root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_76__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

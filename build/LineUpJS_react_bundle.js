@@ -4,13 +4,13 @@
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require(undefined));
+		module.exports = factory(require("react"));
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
 		exports["LineUpJS"] = factory(require("react"));
 	else
-		root["LineUpJS"] = factory(root[undefined]);
+		root["LineUpJS"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_79__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
