@@ -43,7 +43,7 @@ abstract class ACommonDataProvider extends ADataProvider {
   /**
    * the local ranking orders
    */
-  private ranks = new Map<string, number[]>();
+  private readonly ranks = new Map<string, number[]>();
 
   constructor(private columns: IColumnDesc[] = [], options: IDataProviderOptions = {}) {
     super(options);
@@ -54,26 +54,26 @@ abstract class ACommonDataProvider extends ADataProvider {
     });
   }
 
-  protected rankAccessor(row: any, index:number, id: string, desc: IColumnDesc, ranking: Ranking) {
+  protected rankAccessor(row: any, index: number, id: string, desc: IColumnDesc, ranking: Ranking) {
     return (this.ranks[ranking.id].indexOf(index)) + 1;
   }
 
   cloneRanking(existing?: Ranking) {
     const id = this.nextRankingId();
-    const new_ = new Ranking(id);
+    const clone = new Ranking(id);
 
     if (existing) { //copy the ranking of the other one
       //copy the ranking
       this.ranks[id] = this.ranks[existing.id];
       //TODO better cloning
       existing.children.forEach((child) => {
-        this.push(new_, child.desc);
+        this.push(clone, child.desc);
       });
     } else {
-      new_.push(this.create(createRankDesc()));
+      clone.push(this.create(createRankDesc()));
     }
 
-    return new_;
+    return clone;
   }
 
   cleanUpRanking(ranking: Ranking) {

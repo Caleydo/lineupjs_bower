@@ -4,15 +4,17 @@
 
 import {max as d3max, scale, min as d3min} from 'd3';
 import Column from './Column';
-import ValueColumn from './ValueColumn';
-import CategoricalColumn, {ICategoricalColumn} from './CategoricalColumn';
+import ValueColumn,{IValueColumnDesc} from './ValueColumn';
+import CategoricalColumn, {ICategoricalColumn, IBaseCategoricalDesc, ICategoricalFilter} from './CategoricalColumn';
 import NumberColumn, {INumberColumn} from './NumberColumn';
+
+export declare type ICategoricalNumberColumnDesc = IBaseCategoricalDesc & IValueColumnDesc<number>;
 
 /**
  * similar to a categorical column but the categories are mapped to numbers
  */
 export default class CategoricalNumberColumn extends ValueColumn<number> implements INumberColumn, ICategoricalColumn {
-  static EVENT_MAPPING_CHANGED = NumberColumn.EVENT_MAPPING_CHANGED;
+  static readonly EVENT_MAPPING_CHANGED = NumberColumn.EVENT_MAPPING_CHANGED;
 
   private colors = scale.category10();
 
@@ -22,9 +24,9 @@ export default class CategoricalNumberColumn extends ValueColumn<number> impleme
    */
   private catLabels = new Map<string, string>();
 
-  private scale = scale.ordinal().rangeRoundPoints([0, 1]);
+  private readonly scale = scale.ordinal().rangeRoundPoints([0, 1]);
 
-  private currentFilter: string[] = null;
+  private currentFilter: ICategoricalFilter = null;
   /**
    * separator for multi handling
    * @type {string}
@@ -32,7 +34,7 @@ export default class CategoricalNumberColumn extends ValueColumn<number> impleme
   private separator = ';';
   private combiner = d3max;
 
-  constructor(id: string, desc: any) {
+  constructor(id: string, desc: ICategoricalNumberColumnDesc) {
     super(id, desc);
     this.separator = desc.separator || this.separator;
     CategoricalColumn.prototype.initCategories.call(this, desc);
@@ -40,7 +42,7 @@ export default class CategoricalNumberColumn extends ValueColumn<number> impleme
     this.scale.domain(this.colors.domain());
     if (desc.categories) {
       //lookup value or 0.5 by default
-      let values = desc.categories.map((d) => ((typeof d !== 'string' && typeof (d.value) === 'number')) ? d.value : 0.5);
+      const values = desc.categories.map((d) => ((typeof d !== 'string' && typeof (d.value) === 'number')) ? d.value : 0.5);
       this.scale.range(values);
     }
   }
@@ -126,7 +128,7 @@ export default class CategoricalNumberColumn extends ValueColumn<number> impleme
   }
 
   dump(toDescRef: (desc: any) => any): any {
-    let r = CategoricalColumn.prototype.dump.call(this, toDescRef);
+    const r = CategoricalColumn.prototype.dump.call(this, toDescRef);
     r.scale = {
       domain: this.scale.domain(),
       range: this.scale.range(),
@@ -172,18 +174,15 @@ export default class CategoricalNumberColumn extends ValueColumn<number> impleme
     return this.currentFilter;
   }
 
-  setFilter(filter: string[]) {
-    if (this.currentFilter === filter) {
-      return;
-    }
-    this.fire([Column.EVENT_FILTER_CHANGED, Column.EVENT_DIRTY_VALUES, Column.EVENT_DIRTY], this.currentFilter, this.currentFilter = filter);
+  setFilter(filter: ICategoricalFilter) {
+    return CategoricalColumn.prototype.setFilter.call(this, filter);
   }
 
   compare(a: any, b: any, aIndex: number, bIndex: number) {
     return NumberColumn.prototype.compare.call(this, a, b, aIndex, bIndex);
   }
 
-  rendererType(): string {
-    return NumberColumn.prototype.rendererType.call(this);
+  getRendererType(): string {
+    return NumberColumn.prototype.getRendererType.call(this);
   }
 }

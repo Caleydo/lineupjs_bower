@@ -65,9 +65,9 @@ Documentation
 
 [npm-image]: https://badge.fury.io/js/lineupjs.svg
 [npm-url]: https://npmjs.org/package/lineupjs
-[travis-image]: https://travis-ci.org/caleydo/lineupjs.svg
-[travis-url]: https://travis-ci.org/caleydo/lineupjs
-[daviddm-image]: https://david-dm.org/caleydo/lineupjs.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/caleydo/lineupjs
+[travis-image]: https://travis-ci.org/Caleydo/lineupjs.svg?branch=master
+[travis-url]: https://travis-ci.org/Caleydo/lineupjs.svg?branch=master
+[daviddm-image]: https://david-dm.org/Caleydo/lineupjs/status.svg
+[daviddm-url]: https://david-dm.org/Caleydo/lineupjs
 
 

@@ -2,7 +2,7 @@
  * Created by sam on 04.11.2016.
  */
 
-import Column, {IColumnParent, IFlatColumn} from './Column';
+import Column, {IColumnParent, IFlatColumn, IColumnDesc} from './Column';
 
 export interface IMultiLevelColumn extends CompositeColumn {
   getCollapsed(): boolean;
@@ -17,9 +17,9 @@ export function isMultiLevelColumn(col: Column) {
  * implementation of a combine column, standard operations how to select
  */
 export default class CompositeColumn extends Column implements IColumnParent {
-  protected _children: Column[] = [];
+  protected readonly _children: Column[] = [];
 
-  constructor(id: string, desc: any) {
+  constructor(id: string, desc: IColumnDesc) {
     super(id, desc);
   }
 
@@ -41,6 +41,7 @@ export default class CompositeColumn extends Column implements IColumnParent {
     //no more levels or just this one
     if (levelsToGo === 0 || levelsToGo <= Column.FLAT_ALL_COLUMNS) {
       w = this.getCompressed() ? Column.COMPRESSED_WIDTH : this.getWidth();
+      r.push({col: this, offset, width: w});
       if (levelsToGo === 0) {
         return w;
       }
@@ -55,7 +56,7 @@ export default class CompositeColumn extends Column implements IColumnParent {
   }
 
   dump(toDescRef: (desc: any) => any) {
-    let r = super.dump(toDescRef);
+    const r = super.dump(toDescRef);
     r.children = this._children.map((d) => d.dump(toDescRef));
     return r;
   }

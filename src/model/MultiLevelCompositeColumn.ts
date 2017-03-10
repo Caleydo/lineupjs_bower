@@ -3,13 +3,13 @@
  */
 
 import CompositeColumn, {IMultiLevelColumn} from './CompositeColumn';
-import Column, {IFlatColumn} from './Column';
+import Column, {IFlatColumn, IColumnDesc} from './Column';
 import StackColumn from './StackColumn';
 
 export default class MultiLevelCompositeColumn extends CompositeColumn implements IMultiLevelColumn {
-  static EVENT_COLLAPSE_CHANGED = StackColumn.EVENT_COLLAPSE_CHANGED;
+  static readonly EVENT_COLLAPSE_CHANGED = StackColumn.EVENT_COLLAPSE_CHANGED;
 
-  private adaptChange;
+  private readonly adaptChange;
 
   /**
    * whether this stack column is collapsed i.e. just looks like an ordinary number column
@@ -18,11 +18,11 @@ export default class MultiLevelCompositeColumn extends CompositeColumn implement
    */
   private collapsed = false;
 
-  constructor(id: string, desc: any) {
+  constructor(id: string, desc: IColumnDesc) {
     super(id, desc);
     const that = this;
-    this.adaptChange = function (old, new_) {
-      that.adaptWidthChange(old, new_);
+    this.adaptChange = function (old, newValue) {
+      that.adaptWidthChange(old, newValue);
     };
   }
 
@@ -60,7 +60,6 @@ export default class MultiLevelCompositeColumn extends CompositeColumn implement
    * inserts a column at a the given position
    * @param col
    * @param index
-   * @returns {any}
    */
   insert(col: Column, index: number) {
     col.on(Column.EVENT_WIDTH_CHANGED + '.stack', this.adaptChange);
@@ -72,14 +71,14 @@ export default class MultiLevelCompositeColumn extends CompositeColumn implement
 
   /**
    * adapts weights according to an own width change
-   * @param old
-   * @param new_
+   * @param oldValue
+   * @param newValue
    */
-  private adaptWidthChange(old: number, new_: number) {
-    if (old === new_) {
+  private adaptWidthChange(oldValue: number, newValue: number) {
+    if (oldValue === newValue) {
       return;
     }
-    super.setWidth(this.getWidth() + (new_ - old));
+    super.setWidth(this.getWidth() + (newValue - oldValue));
   }
 
   removeImpl(child: Column) {
@@ -97,10 +96,10 @@ export default class MultiLevelCompositeColumn extends CompositeColumn implement
     super.setWidth(value);
   }
 
-  rendererType() {
+  getrendererType() {
     if (this.getCollapsed()) {
       return MultiLevelCompositeColumn.EVENT_COLLAPSE_CHANGED;
     }
-    return super.rendererType();
+    return super.getRendererType();
   }
 }

@@ -1,10 +1,10 @@
-/*! lineupjs - v1.0.0 - 2016
-* https://github.com/Caleydo/lineup.js
-* Copyright (c) 2016 Caleydo Team; Licensed BSD-3-Clause*/
+/*! lineupjs - v1.1.0 - 2017
+* https://github.com/Caleydo/lineupjs
+* Copyright (c) 2017 Caleydo Team; Licensed BSD-3-Clause*/
 
-/*! lineupjs - v1.0.0 - 2016
-* https://github.com/Caleydo/lineup.js
-* Copyright (c) 2016 Caleydo Team; Licensed BSD-3-Clause*/
+/*! lineupjs - v1.1.0 - 2017
+* https://github.com/Caleydo/lineupjs
+* Copyright (c) 2017 Caleydo Team; Licensed BSD-3-Clause*/
 
 .lugui-me {
   margin-bottom: 5px;
@@ -306,6 +306,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
+  .lu div.lu-body div.text.text_center {
+    text-align: center; }
+  .lu div.lu-body div.loading div {
+    display: inline; }
   .lu div.lu-body div.row div.bg {
     background-color: transparent;
     border: 1px solid transparent; }
@@ -356,6 +360,38 @@
 .lu svg.lu-body line.meanline {
   stroke: darkgray;
   stroke-width: 1; }
+
+.lu svg.lu-body .sparklinecell {
+  stroke: black; }
+
+.lu svg.lu-body .boxplotrect {
+  stroke: black;
+  fill: #e0e0e0; }
+
+.lu svg.lu-body .boxplotline {
+  stroke: black;
+  fill: #e0e0e0; }
+
+.lu svg.lu-body .boxplotallpath {
+  stroke: black;
+  fill: #e0e0e0; }
+
+.lu svg.lu-body .boxplotsortpath {
+  stroke: #ff0700;
+  fill: #e0e0e0; }
+
+.lu svg.lu-body .setcircle {
+  stroke: black;
+  fill: black; }
+
+.lu svg.lu-body .setcircleOpacity {
+  stroke: black;
+  fill: black;
+  opacity: 0.1; }
+
+.lu svg.lu-body .upsetpath {
+  stroke: black;
+  fill: black; }
 
 .lu svg.lu-body g.row rect.bg {
   fill: transparent; }
